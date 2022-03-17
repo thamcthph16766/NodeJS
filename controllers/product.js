@@ -5,7 +5,7 @@ import Product from '../model/product';
 export const read = async (req, res) => {
     const filter = {_id: req.params.id}
     try{
-        const products = await Product.findOne(filter );
+        const products = await new Product.findOne(filter );
         res.json(products);
     }catch(error){
         res.status(400).json({
@@ -16,7 +16,7 @@ export const read = async (req, res) => {
 
 export const list = async (req, res) => {
     try{
-        const products = await Product.find();
+        const products = await new Product.find().sort({create: -1});
         res.json(products);
     }catch(error){
         res.status(400).json({
@@ -28,19 +28,20 @@ export const list = async (req, res) => {
 //thêm
 export const create = async (req, res) => {
     try {
-        const Product = await Product(req.body).save();
-        res.json(products);
+        const product = await new Product(req.body).save();
+        res.json(product);
     }catch (error){
         res.status(400).json({
-            message: "lỗi thêm"
+            message: "lỗi thêm",
         })
+        console.log(error);
     }
 }
 
 //xóa
 export const remove = async (req, res) => {
     try{
-        const products = await Product.findOneAndDelete({ _id: req.params.id}).exec()
+        const products = await new Product.findOneAndDelete({ _id: req.params.id}).exec()
         res.json({
             message: "Đã xóa",
             data: products

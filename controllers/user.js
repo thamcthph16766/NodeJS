@@ -9,4 +9,4 @@ export const signUp = async (req, res) => {
             message: "lỗi"
         })
     }
-}
+} 

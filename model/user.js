@@ -17,5 +17,10 @@ const userSchema = new Schema({
         type: Number,
         minlength:10,
         required: phone
+    },
+    pass:{
+        type: String,
+        minlength:8,
+        required: pass
     }
 })

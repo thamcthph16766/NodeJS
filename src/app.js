@@ -6,14 +6,17 @@ import morgan from 'morgan';
 import productRoute from '../routes/product';
 import newRoute from '../routes/new';
 import mongoose from 'mongoose';
+import categoryRoute from '../routes/category';
 
 const app = express();
 
 app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
+
 app.use("/api", productRoute);
 app.use("/api", newRoute);
+app.use("/api", categoryRoute);
 
 mongoose.connect('mongodb://localhost:27017/web16309')
 .then(() => console.log("Kết nối thành công"))
