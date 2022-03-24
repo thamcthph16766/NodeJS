@@ -7,6 +7,7 @@ import productRoute from '../routes/product';
 import newRoute from '../routes/new';
 import mongoose from 'mongoose';
 import categoryRoute from '../routes/category';
+import userRoute from '../routes/auth';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/api", productRoute);
 app.use("/api", newRoute);
 app.use("/api", categoryRoute);
+app.use("/api", userRoute);
 
 mongoose.connect('mongodb://localhost:27017/web16309')
 .then(() => console.log("Kết nối thành công"))
