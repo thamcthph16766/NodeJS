@@ -17,10 +17,17 @@ const userSchema = new Schema({
     password:{
         type: String,
         required: true
+    },
+    role:{
+        type: Number,
+        default: 0
     }
 }, {timestamps: true});
 
 userSchema.methods ={
+    authenticate(password){
+        return this.password == this.encrytPassword(password);
+    },
     encrytPassword(password){
         if(!password) return
         try {

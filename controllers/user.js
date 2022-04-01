@@ -1,22 +1,15 @@
 import User from '../model/user';
-
-export const signin = async (req, res) => {
-    const {name, password, email} =req.body;
+export const userById = async (req, res, next, id) => {
     try {
-        const existUser = await User.findOne({email}).exec();
-        if(existUser){
-            res.json({
-                message: "Email đã tồn tại"
+        const user = await User.findById(id).exec();
+        if(!user){
+            res.status(400).json({
+                message: "Không tìm thấy"
             })
-        };
-        const user = await new User(req.body);
-        res.json({
-            user:{
-                _id:user._id,
-                name:user.name,
-                email: user.email
-            }
-        });
+        }
+        req.profile = user;
+        next();
     } catch (error) {
+        
+    }
 }
-} 
