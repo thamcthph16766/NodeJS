@@ -32,7 +32,7 @@ export const create = async (req, res) => {
         res.json(product);
     }catch (error){
         res.status(400).json({
-            message: "lỗi thêm",
+            message: "Không thêm được",
         })
         console.log(error);
     }
@@ -43,7 +43,7 @@ export const remove = async (req, res) => {
     try{
         const products = await Product.findOneAndDelete({ _id: req.params.id}).exec()
         res.json({
-            message: "Đã xóa",
+            message: "Đã xóa thành công",
             data: products
         })
     }catch(error){
