@@ -11,7 +11,7 @@ export const checkAuth = (req, res, next) => {
 export const requireSignin = expressJWT({
     algorithms: ["HS256"],
     secret: "abc",
-    requestProperty: "auth"
+    requestProperty: "auth" 
 });
 
 export const isAuth = (req, res, next) =>{
@@ -22,6 +22,14 @@ export const isAuth = (req, res, next) =>{
     if(!status){
         res.status(400).json({
         message: "Không có quyền truy cập"
+        })
+    }
+    next();
+}
+export const isAdmin = (req, res, next) =>{
+    if(req.profile.role === 0){
+        res.status(401).json({
+            message: "Không phải admin"
         })
     }
     next();

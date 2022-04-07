@@ -9,8 +9,10 @@ export const read = async (req, res) => {
         res.json(products);
     }catch(error){
         res.status(400).json({
-            message: "lỗi"
+            message: "lỗi hiển thị 1 sản phẩm "
         })
+        
+        console.log(error);
     }
 }
 
@@ -67,3 +69,44 @@ export const update = async (req, res) => {
         })
     }
 }
+
+//search
+export const search = async( req, res) =>{
+    const searchString = req.query.q
+    try {
+        const product = await Product.find({$text: {$search: searchString}})
+        res.json(product)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const paging = async (req, res) => {
+    const pageOptions = {
+        page: parseInt(req.query.page),
+        limit: parseInt(req.query.limit)
+    }
+    try {
+        const product = await Product.find()
+            .skip(pageOptions.page * pageOptions.limit)
+            .limit(pageOptions.limit)
+            .exec();
+            res.json(product);
+    } catch (error) {
+        res.status(400).json({ message: "Lỗi phân trang" })
+        console.log(error);
+    }
+}
+export const priceFilter = async (req, res) => {
+    const priceOptions = {
+        min: parseInt(req.query.min),
+        max: parseInt(req.query.max)
+    }
+    try {
+        const product = await Product.find({ price: { $gte:priceOptions.min, $lte:priceOptions.max} });
+        res.json(product);
+    } catch (error) {
+        res.status(400).json({ message: "Lỗi lọc theo giá" })
+        console.log(error);
+    }
+} 
